@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <select name="sort" id="sortSelect">
+        <option value="default">Выберите сортировку</option>
+        <option value="ascending">По возрастанию</option>
+        <option value="descending">По убыванию</option>
+    </select>
+    <h1>Каталог товаров</h1>
+    <div id="productsContainer"></div>
+    <div id="cart">
+        <h2>Корзина</h2>
+        <div id="cartItemsContainer"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const products = [
+                { "name": "Смартфон Galaxy S21", "price": 49900 },
+                { "name": "Умные часы Apple Watch Series 6", "price": 32900 }
+            ];
+
+            function renderProducts() {
+                productsContainer.innerHTML = '';
+                products.forEach(products => {
+                    const productDiv = document.createElement('div');
+                    productDiv.classList.add('product');
+
+                    const productName = document.createElement('h3');
+                    productName.textContent = products.name;
+
+                    const productPrice = document.createElement('p');
+                    productPrice.textContent = `Цена ${products.price} руб`;
+
+                    productDiv.append(productName, productPrice)
+                    productsContainer.append(productDiv)
+                });
+            }
+            sortSelect.addEventListener('change', function (e) {
+                const sortValue = this.value;
+                if (sortValue === 'ascending') {
+                    products.sort((a, b) => a.price - b.price);
+                } else if (sortValue === 'descending') {
+                    products.sort((a, b) => b.price - a.price);
+                }
+                renderProducts();
+
+
+            });
+            renderProducts();
+        });
+
+
+    </script>
+</body>
+
+</html>
